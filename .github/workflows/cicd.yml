@@ -31,7 +31,6 @@ jobs:
            mkdir ~/.aws
            cp config ~/.aws/config
            cp credentials ~/.aws/credentials
-           aws s3 ls
           
 #    - name: List EKS clusters
 #      run: |
