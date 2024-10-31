@@ -18,27 +18,3 @@ jobs:
     - name: Application build Stage
       run: |
            mvn clean install
-
-   # - name: Code Coverage Stage
-   #   run: |
-   #        mvn clean verify sonar:sonar \
-   #          -Dsonar.projectKey=awsplugin \
-   #          -Dsonar.projectName='awsplugin' \
-   #          -Dsonar.host.url=http://hivemet.com:9000 \
-   #          -Dsonar.token=${{ secrets.AWSPLUGIN_KEY }}
-    - name: Configure AWS connectivity
-      run: |
-           mkdir ~/.aws
-           cp config ~/.aws/config
-           cp credentials ~/.aws/credentials
-          
-#    - name: List EKS clusters
-#      run: |
-#        aws s3 ls
-      
-    - name: Docker Build & Push to ECR
-      run: |  
-            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 891376975876.dkr.ecr.us-east-1.amazonaws.com
-            docker build -t cicd/healthcare .
-            docker tag cicd/healthcare:latest 891376975876.dkr.ecr.us-east-1.amazonaws.com/cicd/healthcare:latest
-            docker push 891376975876.dkr.ecr.us-east-1.amazonaws.com/cicd/healthcare:latest
