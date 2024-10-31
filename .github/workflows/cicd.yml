@@ -31,9 +31,9 @@ jobs:
           aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY }}
           aws configure set aws_secret_access_key ${{ secrets.SECRET_KEY }}
 
-    - name: List EKS clusters
-      run: |
-        aws s3 ls
+#    - name: List EKS clusters
+#      run: |
+#        aws s3 ls
       
     - name: Docker Build & Push to ECR
       run: |  
