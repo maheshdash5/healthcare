@@ -5,29 +5,18 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: mahesh
     steps:
-    - uses: actions/checkout@v4
-    - name: Build tool setup Stage
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-        
+    - uses: actions/checkout@v4      
     - name: Application build Stage
-      run: |
-           mvn clean install
-    - name: Upload to S3
-      run: |
-          aws s3 ls
-      env:
-         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-         AWS_DEFAULT_REGION: 'us-east-1'
+      run: mvn clean install
+    - name: Check connectivity with AWS
+      run: aws s3 ls
 
     - name: Docker Build & Push to ECR 
       run: | 
+           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 891376975876.dkr.ecr.us-east-1.amazonaws.com
            docker build -t cicd/healthcare . 
            docker tag cicd/healthcare:latest 891376975876.dkr.ecr.us-east-1.amazonaws.com/cicd/healthcare:latest 
+           docker push 891376975876.dkr.ecr.us-east-1.amazonaws.com/cicd/healthcare:latest
            
