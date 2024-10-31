@@ -26,26 +26,12 @@ jobs:
    #          -Dsonar.projectName='awsplugin' \
    #          -Dsonar.host.url=http://hivemet.com:9000 \
    #          -Dsonar.token=${{ secrets.AWSPLUGIN_KEY }}
-    - name: Configure AWS Credentials 1
-      id: creds
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-region: us-east-1
-        role-to-assume: arn:aws:iam::891376975876:user/adminuser
-        output-credentials: true
-    - name: get caller identity 1
+    - name: Configure AWS connectivity
       run: |
-        aws sts get-caller-identity
-    - name: Configure AWS Credentials 2
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-region: us-east-2
-        aws-access-key-id: ${{ steps.creds.outputs.aws-access-key-id }}
-        aws-secret-access-key: ${{ steps.creds.outputs.aws-secret-access-key }}
-        aws-session-token: ${{ steps.creds.outputs.aws-session-token }}
-        role-to-assume: arn:aws:iam::891376975876:user/adminuser
+          aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY }}
+          aws configure set aws_secret_access_key ${{ secrets.SECRET_KEY }}
 
-    - name: get caller identity
+    - name: List EKS clusters
       run: |
         aws eks list-clusters
       
