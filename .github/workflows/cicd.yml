@@ -18,3 +18,9 @@ jobs:
     - name: Application build Stage
       run: |
            mvn clean install
+
+    - name: Docker Build & Push to ECR 
+      run: | 
+           docker build -t cicd/healthcare . 
+           docker tag cicd/healthcare:latest 891376975876.dkr.ecr.us-east-1.amazonaws.com/cicd/healthcare:latest 
+           
