@@ -28,9 +28,11 @@ jobs:
    #          -Dsonar.token=${{ secrets.AWSPLUGIN_KEY }}
     - name: Configure AWS connectivity
       run: |
-          aws configure set aws_access_key_id ${{ secrets.ACCESS_KEY }}
-          aws configure set aws_secret_access_key ${{ secrets.SECRET_KEY }}
-
+           mkdir ~/.aws
+           cp config ~/.aws/config
+           cp credentials ~/.aws/credentials
+           aws s3 ls
+          
 #    - name: List EKS clusters
 #      run: |
 #        aws s3 ls
