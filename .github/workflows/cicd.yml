@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: mahesh
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v4      
     - name: Application build Stage
