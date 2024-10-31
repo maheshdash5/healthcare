@@ -33,7 +33,7 @@ jobs:
 
     - name: List EKS clusters
       run: |
-        aws eks list-clusters
+        aws s3 ls
       
     - name: Docker Build & Push to ECR
       run: |  
